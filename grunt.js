@@ -25,13 +25,13 @@ module.exports = function(grunt) {
 				},
 				concat: {
 						dist: {
-								src: ['include/js/lib/json2.js','include/js/lib/jquery-1.8.3.min.js','include/js/lib/underscore.js','include/js/lib/backbone.js','include/js/lib/backbone-relational.js','include/js/modules/game/**/*.js'],
+								src: ['include/js/lib/json2.js','include/js/lib/jquery-1.8.3.min.js','include/js/lib/underscore.js','include/js/lib/backbone.js','include/js/lib/backbone-relational.js','include/js/bootstrap.js','include/js/modules/game/**/*.js'],
 								dest: 'dist/flatland.js'
 						}
 				},
 				min: {
 						dist: {
-								src: ['include/js/lib/json2.js','include/js/lib/jquery-1.8.3.min.js','include/js/lib/underscore.js','include/js/lib/backbone.js','include/js/lib/backbone-relational.js','include/js/modules/game/**/*.js'],
+								src: ['include/js/lib/json2.js','include/js/lib/jquery-1.8.3.min.js','include/js/lib/underscore.js','include/js/lib/backbone.js','include/js/lib/backbone-relational.js','include/js/bootstrap.js','include/js/modules/game/**/*.js'],
 								dest: 'dist/flatland.min.js'
 						}
 				},
