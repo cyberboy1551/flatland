@@ -1,0 +1,15 @@
+@import "imports/config";
+
+html, body {
+		.main-wrapper {
+				.header {
+						height: 50px;
+				}
+				.footer {
+						height: 25px;
+				}
+				.inner-body {
+						height: (100% - 75px);
+				}
+		}
+}
