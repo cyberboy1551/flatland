@@ -10,7 +10,7 @@
 						area: 0
 				},
 				initialize: function(options) {
-						this.on("change:vertices", this.updateArea, this);
+						this.on("add:vertices", this.updateArea, this);
 				},
 				updateArea: function() {
 						if ((this.get('vertices')).length == 3) {

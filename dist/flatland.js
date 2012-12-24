@@ -5064,7 +5064,7 @@ var Game = Flatland.module('Game');
 						area: 0
 				},
 				initialize: function(options) {
-						this.on("change:vertices", this.updateArea, this);
+						this.on("add:vertices", this.updateArea, this);
 				},
 				updateArea: function() {
 						if ((this.get('vertices')).length == 3) {
@@ -5079,21 +5079,3 @@ var Game = Flatland.module('Game');
 		});
 
 })(Flatland.module("Game"));
-
-module("Triangle Model",{
-		setup: function() {
-				var p1 = new Game.Models.Point({ x:0, y:0 });
-				var p2 = new Game.Models.Point({ x:1, y:0 });
-				var p3 = new Game.Models.Point({ x:0, y:1 });
-
-				this.testTriangle = new Game.Models.Triangle();
-
-				this.testTriangle.get("vertices").add(p1);
-				this.testTriangle.get("vertices").add(p2);
-				this.testTriangle.get("vertices").add(p3);
-		}
-});
-
-test("Calculate Area", function() {
-		equal(this.testTriangle.get("area"), .5, "Passed");
-});
