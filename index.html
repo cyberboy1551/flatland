@@ -14,12 +14,23 @@
 			
 		</div>
 		<script>
+
 			var point2 = new Game.Models.Point({x:1, y:1});
 			var point1 = new Game.Models.Point({x:0, y:0});
+			var point3 = new Game.Models.Point({x:1, y:0});
+
 			var line = new Game.Models.Line();
-			line.get("points").add(point1);
-			line.get("points").add(point2);
+			var triangle = new Game.Models.Triangle();
+
+			line.get("endpoints").add(point1);
+			line.get("endpoints").add(point2);
 			console.log(line);
+
+			triangle.get("vertices").add(point1);
+			triangle.get("vertices").add(point2);
+			triangle.get("vertices").add(point3);
+			console.log(triangle);
+
 		</script>
 	</body>
 </html>
