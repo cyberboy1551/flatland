@@ -3,8 +3,8 @@ module("Line Model",{
 				var p1 = new Game.Models.Point({x:0, y:0});
 				var p2 = new Game.Models.Point({x:1, y:1});
 				this.testLine = new Game.Models.Line();
-				this.testLine.get("points").add(p1);
-				this.testLine.get("points").add(p2);
+				this.testLine.get("endpoints").add(p1);
+				this.testLine.get("endpoints").add(p2);
 		}
 });
 

@@ -4978,8 +4978,8 @@ var Game = Flatland.module('Game');
 		Game.Models.Line = Backbone.RelationalModel.extend({
 				relations: [{
 						type: Backbone.HasMany,
-						key: "points",
-						relatedModel: "Flatland.modules.Game.Models.Point",
+						key: "endpoints",
+						relatedModel: "Flatland.modules.Game.Models.Point"
 				}],
 				defaults: {
 						// The length of the line
@@ -4988,25 +4988,25 @@ var Game = Flatland.module('Game');
 				},
 				// Takes a collection of Game.Models.Point objects
 				initialize: function(options) {
-						this.on("add:points", this.updateLength, this);
-						this.on("add:points", this.updateSlope, this);
-						this.on("add:points", this.updatePoints, this);
+						this.on("add:endpoints", this.updateLength, this);
+						this.on("add:endpoints", this.updateSlope, this);
+						this.on("add:endpoints", this.updateEndPoints, this);
 				},
 				updateLength: function() {
-						if ((this.get("points")).length > 1) {
-								var point1 = (this.get("points")).first();
-								var point2 = (this.get("points")).last();
+						if ((this.get("endpoints")).length > 1) {
+								var point1 = (this.get("endpoints")).first();
+								var point2 = (this.get("endpoints")).last();
 								this.set({ length: Math.sqrt(Math.pow((point2.get("x") - point1.get("x")),2) + Math.pow((point2.get("y") - point1.get("y")),2)) });
 						}
 				},
-				updatePoints: function() {
+				updateEndPoints: function() {
 						// Determine which point moved.
 						// Use this.slope to determine how to move the second point
 				},
 				updateSlope: function() {
-						if ((this.get("points")).length > 1 ) {
-								var point1 = (this.get("points")).first();
-						    var point2 = (this.get("points")).last();
+						if ((this.get("endpoints")).length > 1 ) {
+								var point1 = (this.get("endpoints")).first();
+						    var point2 = (this.get("endpoints")).last();
 								this.set({ slope: (point2.get("y") - point1.get("y")) /
 													        (point2.get("x") - point1.get("x"))  });
 						}
@@ -5051,3 +5051,49 @@ var Game = Flatland.module('Game');
 		});
 
 })(Flatland.module("Game"));
+
+(function(Game) {
+
+		Game.Models.Triangle = Backbone.RelationalModel.extend({
+				relations: [{
+						type: Backbone.HasMany,
+						key: "vertices",
+						relatedModel: "Flatland.modules.Game.Models.Point"
+				}],
+				defaults: {
+						area: 0
+				},
+				initialize: function(options) {
+						this.on("change:vertices", this.updateArea, this);
+				},
+				updateArea: function() {
+						if ((this.get('vertices')).length == 3) {
+								var p1 = this.get("vertices").at(0);
+								var p2 = this.get("vertices").at(1);
+								var p3 = this.get("vertices").at(2);
+								this.set({ area: Math.abs(
+										(p1.get("x")*(p2.get("y")-p3.get("y")) + p2.get("x")*(p3.get("y")-p1.get("y")) + p3.get("x")*(p1.get("y")-p2.get("y")))/2
+								) });
+						}
+				}
+		});
+
+})(Flatland.module("Game"));
+
+module("Triangle Model",{
+		setup: function() {
+				var p1 = new Game.Models.Point({ x:0, y:0 });
+				var p2 = new Game.Models.Point({ x:1, y:0 });
+				var p3 = new Game.Models.Point({ x:0, y:1 });
+
+				this.testTriangle = new Game.Models.Triangle();
+
+				this.testTriangle.get("vertices").add(p1);
+				this.testTriangle.get("vertices").add(p2);
+				this.testTriangle.get("vertices").add(p3);
+		}
+});
+
+test("Calculate Area", function() {
+		equal(this.testTriangle.get("area"), .5, "Passed");
+});
